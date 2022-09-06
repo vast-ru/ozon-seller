@@ -37,4 +37,20 @@ class ProductService extends AbstractService
 
         return $this->request('POST', "{$this->path}s/info/attributes", $body);
     }
+
+    /**
+     * @see https://docs.ozon.ru/api/seller/#operation/ProductAPI_GetProductInfoStocksV3
+     */
+    public function infoStocks(string $lastId = '', int $limit = 100): array
+    {
+        assert($limit > 0 && $limit <= 1000);
+
+        $body = json_encode([
+            'filter'  => [],
+            'last_id' => $lastId,
+            'limit'   => $limit,
+        ], JSON_FORCE_OBJECT);
+
+        return $this->request('POST', "{$this->path}/info/stocks", $body);
+    }
 }
